@@ -131,3 +131,43 @@ internal object ActivityIndicatorTokens {
     val ActiveIndicatorWidth = 4.0.dp
     val Size = 38.0.dp
 }
+
+@Composable
+actual fun AdaptiveCircularProgressIndicator(
+    progress: Float,
+    modifier: Modifier,
+    color: Color,
+    strokeWidth: Dp,
+    trackColor: Color,
+    strokeCap: StrokeCap
+) {
+    // رسم دائرة بسيطة لprogress determinate
+    Canvas(
+        modifier = modifier
+            .progressSemantics(progress)
+            .size(ActivityIndicatorDiameter),
+    ) {
+        val diameter = size.minDimension
+        val radius = diameter / 2f
+        val stroke = strokeWidth.toPx()
+
+        // Draw track circle
+        drawCircle(
+            color = trackColor,
+            radius = radius,
+            center = center,
+            style = androidx.compose.ui.graphics.drawscope.Stroke(width = stroke, cap = strokeCap)
+        )
+
+        // Draw progress arc
+        drawArc(
+            color = color,
+            startAngle = -90f, // start from top
+            sweepAngle = progress * 360f, // convert progress 0f..1f to 360 degrees
+            useCenter = false,
+            topLeft = Offset.Zero,
+            size = Size(diameter, diameter),
+            style = androidx.compose.ui.graphics.drawscope.Stroke(width = stroke, cap = strokeCap)
+        )
+    }
+}

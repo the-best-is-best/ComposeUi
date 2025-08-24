@@ -23,3 +23,24 @@ actual fun AdaptiveCircularProgressIndicator(
         strokeCap = strokeCap,
     )
 }
+
+@Composable
+actual fun AdaptiveCircularProgressIndicator(
+    progress: Float,
+    modifier: Modifier,
+    color: Color,
+    strokeWidth: Dp,
+    trackColor: Color,
+    strokeCap: StrokeCap
+) {
+    CircularProgressIndicator(
+        progress = {
+            progress
+        },
+        modifier = modifier,
+        trackColor = trackColor,
+        color = color,
+        strokeWidth = strokeWidth,
+        strokeCap = strokeCap,
+    )
+}
