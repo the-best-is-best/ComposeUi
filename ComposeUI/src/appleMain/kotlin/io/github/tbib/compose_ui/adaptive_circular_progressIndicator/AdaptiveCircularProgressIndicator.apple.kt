@@ -32,9 +32,7 @@ actual fun AdaptiveCircularProgressIndicator(
     CupertinoActivityIndicator(
         modifier = modifier,
         color = color,
-        strokeCap = strokeCap,
         trackColor = trackColor,
-        strokeWidth = strokeWidth
 
     )
 }
@@ -45,16 +43,17 @@ actual fun AdaptiveCircularProgressIndicator(
  * */
 @Composable
 private fun CupertinoActivityIndicator(
-    color: Color,
-    modifier: Modifier,
-    strokeWidth: Dp,
-    trackColor: Color,
-    strokeCap: StrokeCap,
+    color: Color = Color.Gray,
+    modifier: Modifier = Modifier,
+    trackColor: Color
 ) {
+    // number of paths of the activity indicator
     val pathCount = 8
+    // duration of a single animation cycle
     val durationMillis = 1000
     val minAlpha = .1f
     val animatedPathCount = (pathCount / 2).coerceIn(1, pathCount)
+
     val coefficient = 360f / pathCount
 
     val infiniteTransition = rememberInfiniteTransition()
@@ -62,7 +61,10 @@ private fun CupertinoActivityIndicator(
         initialValue = 0f,
         targetValue = pathCount.toFloat(),
         animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = durationMillis, easing = LinearEasing),
+            animation = tween(
+                durationMillis = durationMillis,
+                easing = LinearEasing,
+            ),
             repeatMode = RepeatMode.Restart,
         ),
     )
@@ -72,49 +74,60 @@ private fun CupertinoActivityIndicator(
             .progressSemantics()
             .size(ActivityIndicatorDiameter),
     ) {
-        val canvasSize = minOf(size.width, size.height)
-        val itemWidth = (strokeWidth * 3).toPx()
-        val itemHeight = canvasSize / pathCount
-        val cornerRadius = if (strokeCap == StrokeCap.Round) itemWidth / 2 else 0f
+        var canvasWidth = size.width
+        var canvasHeight = size.height
 
-        val horizontalOffset = (size.width - canvasSize) / 2
-        val verticalOffset = (size.height - canvasSize) / 2
+        if (canvasHeight < canvasWidth) {
+            canvasWidth = canvasHeight
+        } else {
+            canvasHeight = canvasWidth
+        }
+
+        val itemWidth = canvasWidth / 3f
+        val itemHeight = canvasHeight / pathCount
+
+        val cornerRadius = itemWidth.coerceAtMost(itemHeight) / 2
+
+        val horizontalOffset = (size.width - size.height).coerceAtLeast(0f) / 2
+        val verticalOffset = (size.height - size.width).coerceAtLeast(0f) / 2
+
         val topLeftOffset = Offset(
-            x = horizontalOffset + canvasSize - itemWidth,
-            y = verticalOffset + (canvasSize - itemHeight) / 2
+            x = horizontalOffset + canvasWidth - itemWidth,
+            y = verticalOffset + (canvasHeight - itemHeight) / 2,
         )
-        val rectSize = Size(itemWidth, itemHeight)
 
-        // Draw track
+        val size = Size(itemWidth, itemHeight)
+
         for (i in 0..360 step 360 / pathCount) {
             rotate(i.toFloat()) {
                 drawRoundRect(
                     color = trackColor.copy(alpha = minAlpha.coerceIn(0f, 1f)),
                     topLeft = topLeftOffset,
-                    size = rectSize,
-                    cornerRadius = CornerRadius(cornerRadius, cornerRadius)
+                    size = size,
+                    cornerRadius = CornerRadius(cornerRadius, cornerRadius),
                 )
             }
         }
 
-        // Draw animated paths
         for (i in 0..animatedPathCount) {
             rotate((angle.toInt() + i) * coefficient) {
                 drawRoundRect(
-                    color = color.copy(alpha = (1f / (pathCount / 2) * i).coerceIn(0f, 1f)),
+                    color = color.copy(
+                        alpha = (1f / (pathCount / 2) * i).coerceIn(0f, 1f),
+                    ),
                     topLeft = topLeftOffset,
-                    size = rectSize,
-                    cornerRadius = CornerRadius(cornerRadius, cornerRadius)
+                    size = size,
+                    cornerRadius = CornerRadius(cornerRadius, cornerRadius),
                 )
             }
         }
     }
 }
 
-private val ActivityIndicatorDiameter =
+internal val ActivityIndicatorDiameter =
     ActivityIndicatorTokens.Size - ActivityIndicatorTokens.ActiveIndicatorWidth * 2
 
-private object ActivityIndicatorTokens {
+internal object ActivityIndicatorTokens {
     val ActiveIndicatorWidth = 4.0.dp
     val Size = 38.0.dp
 }
