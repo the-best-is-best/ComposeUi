@@ -9,10 +9,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 
 @Composable
-actual fun <Route> BottomNavBar(
+actual fun <Route> AdaptiveBottomNavBar(
     modifier: Modifier,
     elevation: Dp,
-    items: List<BottomNavItem<Route>>,
+    items: List<AdaptiveBottomNavBarItem<Route>>,
     alwaysShowLabel: Boolean,
     selectedIndex: Int,
     onSelectedItemIndexChange: (Int) -> Unit

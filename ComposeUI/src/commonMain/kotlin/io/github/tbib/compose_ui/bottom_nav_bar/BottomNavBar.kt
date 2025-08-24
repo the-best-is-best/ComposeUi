@@ -6,10 +6,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 
 @Composable
-expect fun <Route> BottomNavBar(
+expect fun <Route> AdaptiveBottomNavBar(
     modifier: Modifier = Modifier,
     elevation: Dp = NavigationBarDefaults.Elevation,
-    items: List<BottomNavItem<Route>>,
+    items: List<AdaptiveBottomNavBarItem<Route>>,
     alwaysShowLabel: Boolean = true,
     selectedIndex: Int = 0,
     onSelectedItemIndexChange: (Int) -> Unit,

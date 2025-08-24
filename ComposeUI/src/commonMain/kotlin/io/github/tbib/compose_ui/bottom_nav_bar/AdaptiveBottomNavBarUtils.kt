@@ -10,9 +10,9 @@ import androidx.compose.ui.unit.sp
 /**
  * Represents a single bottom navigation item
  */
-data class BottomNavItem<Route>(
-    val title: BottomNavItemTitle, // instead of raw Composable
-    val icon: BottomNavItemIcon,
+data class AdaptiveBottomNavBarItem<Route>(
+    val title: AdaptiveBottomNavItemTitle, // instead of raw Composable
+    val icon: AdaptiveBottomNavItemIcon,
     val route: Route,
 )
 
@@ -33,7 +33,7 @@ data class BottomNavItem<Route>(
  * @param selectedColor The color to use when the item is selected.
  * @param unselectedColor The color to use when the item is not selected.
  */
-data class BottomNavItemIcon(
+data class AdaptiveBottomNavItemIcon(
     val selectedIcon: ImageVector,
     val unSelectedIcon: ImageVector? = null,
     val iconSize: Dp = 24.dp,
@@ -56,10 +56,11 @@ data class BottomNavItemIcon(
  * Represents the title/label of the bottom nav item.
  *
  * @param text The default text label to display.
- * @param color The color of the text when using the default renderer.
+ * @param selectedColor The text color when the item is selected (when using the default renderer).
+ * @param unselectedColor The text color when the item is not selected (when using the
  * @param style The text style (font size, weight, etc.) when using the default renderer.
  */
-data class BottomNavItemTitle(
+data class AdaptiveBottomNavItemTitle(
     val text: String,
     val selectedColor: Color = Color.Black,
     val unselectedColor: Color = Color.Black,

@@ -24,20 +24,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import io.github.tbib.compose_ui.bottom_nav_bar.BottomNavBar
-import io.github.tbib.compose_ui.bottom_nav_bar.BottomNavItem
-import io.github.tbib.compose_ui.bottom_nav_bar.BottomNavItemIcon
-import io.github.tbib.compose_ui.bottom_nav_bar.BottomNavItemTitle
+import io.github.tbib.compose_ui.bottom_nav_bar.AdaptiveBottomNavBar
+import io.github.tbib.compose_ui.bottom_nav_bar.AdaptiveBottomNavBarItem
+import io.github.tbib.compose_ui.bottom_nav_bar.AdaptiveBottomNavItemIcon
+import io.github.tbib.compose_ui.bottom_nav_bar.AdaptiveBottomNavItemTitle
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 val items = listOf(
-    BottomNavItem<Routes>(
-        title = BottomNavItemTitle(
+    AdaptiveBottomNavBarItem<Routes>(
+        title = AdaptiveBottomNavItemTitle(
             text = "Home",
             selectedColor = Color.Red,
             unselectedColor = Color.Gray
         ),
-        icon = BottomNavItemIcon(
+        icon = AdaptiveBottomNavItemIcon(
             selectedIcon = Icons.Filled.Home,
             iosIconSelected = "house.fill",
             selectedColor = Color.Blue,
@@ -45,14 +45,14 @@ val items = listOf(
         ),
         route = Routes.Home
     ),
-    BottomNavItem<Routes>(
-        title = BottomNavItemTitle(
+    AdaptiveBottomNavBarItem<Routes>(
+        title = AdaptiveBottomNavItemTitle(
             text = "History",
             selectedColor = Color.Red,
             unselectedColor = Color.Gray
 
         ),
-        icon = BottomNavItemIcon(
+        icon = AdaptiveBottomNavItemIcon(
             selectedIcon = Icons.Filled.CalendarMonth,
             iosIconSelected = "calendar.circle.fill",
             selectedColor = Color.Blue,
@@ -60,14 +60,14 @@ val items = listOf(
         ),
         route = Routes.History
     ),
-    BottomNavItem<Routes>(
-        title = BottomNavItemTitle(
+    AdaptiveBottomNavBarItem<Routes>(
+        title = AdaptiveBottomNavItemTitle(
             text = "Availability",
             selectedColor = Color.Red,
             unselectedColor = Color.Gray
 
         ),
-        icon = BottomNavItemIcon(
+        icon = AdaptiveBottomNavItemIcon(
             selectedIcon = Icons.Filled.SyncLock,
             iosIconSelected = "clock.fill",
             selectedColor = Color.Blue,
@@ -84,7 +84,7 @@ fun App() {
     MaterialTheme {
         Scaffold(
             bottomBar = {
-                BottomNavBar(
+                AdaptiveBottomNavBar(
                     items = items,
                     modifier = Modifier
                         .fillMaxWidth()
