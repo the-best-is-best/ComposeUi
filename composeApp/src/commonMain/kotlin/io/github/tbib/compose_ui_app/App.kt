@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Details
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -34,9 +35,13 @@ import io.github.tbib.compose_ui.bottom_nav_bar.AdaptiveBottomNavBar
 import io.github.tbib.compose_ui.bottom_nav_bar.AdaptiveBottomNavBarItem
 import io.github.tbib.compose_ui.bottom_nav_bar.AdaptiveBottomNavItemIcon
 import io.github.tbib.compose_ui.bottom_nav_bar.AdaptiveBottomNavItemTitle
+import io.github.tbib.compose_ui.date_time_picker.AdaptiveDatePicker
+import io.github.tbib.compose_ui.date_time_picker.rememberAdaptiveDatePickerState
 import io.github.tbib.compose_ui_app.dialogs.DeleteDialogQuestion
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
 val items = listOf(
     AdaptiveBottomNavBarItem<Routes>(
@@ -71,6 +76,7 @@ val items = listOf(
 )
 
 
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalTime::class)
 @Composable
 @Preview
 fun App() {
@@ -88,7 +94,11 @@ fun App() {
             args = "Some item to delete"
         )
     }
+    val initialMillis = Clock.System.now().toEpochMilliseconds()
 
+    val datePickerState = rememberAdaptiveDatePickerState(
+        initialSelectedDateMillis = initialMillis,
+    )
     MaterialTheme {
         Scaffold(
             bottomBar = {
@@ -151,6 +161,11 @@ fun App() {
                             }) {
                                 Text("Show Dialog", color = Color.White)
                             }
+                        }
+                        item {
+                            AdaptiveDatePicker(
+                                state = datePickerState
+                            )
                         }
                     }
                 }
