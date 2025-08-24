@@ -8,9 +8,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.Details
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.SyncLock
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -24,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import io.github.tbib.compose_ui.adaptive_circular_progressIndicator.AdaptiveCircularProgressIndicator
 import io.github.tbib.compose_ui.bottom_nav_bar.AdaptiveBottomNavBar
 import io.github.tbib.compose_ui.bottom_nav_bar.AdaptiveBottomNavBarItem
 import io.github.tbib.compose_ui.bottom_nav_bar.AdaptiveBottomNavItemIcon
@@ -53,27 +53,12 @@ val items = listOf(
 
         ),
         icon = AdaptiveBottomNavItemIcon(
-            selectedIcon = Icons.Filled.CalendarMonth,
-            iosIconSelected = "calendar.circle.fill",
+            selectedIcon = Icons.Filled.Details,
+            iosIconSelected = "ellipsis.circle", // Details
             selectedColor = Color.Blue,
             unselectedColor = Color.Gray
         ),
-        route = Routes.History
-    ),
-    AdaptiveBottomNavBarItem<Routes>(
-        title = AdaptiveBottomNavItemTitle(
-            text = "Availability",
-            selectedColor = Color.Red,
-            unselectedColor = Color.Gray
-
-        ),
-        icon = AdaptiveBottomNavItemIcon(
-            selectedIcon = Icons.Filled.SyncLock,
-            iosIconSelected = "clock.fill",
-            selectedColor = Color.Blue,
-            unselectedColor = Color.Gray
-        ),
-        route = Routes.History
+        route = Routes.Details
     ),
 )
 
@@ -122,8 +107,11 @@ fun App() {
                         }
                     }
 
-                    1 -> Text("History Screen", color = Color.Black)
-                    2 -> Text("Availability Screen", color = Color.Black)
+                    1 -> LazyColumn {
+                        item {
+                            AdaptiveCircularProgressIndicator()
+                        }
+                    }
                 }
             }
         }
