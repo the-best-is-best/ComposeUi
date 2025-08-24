@@ -1,7 +1,9 @@
 package io.github.tbib.compose_ui_app
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -19,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -28,6 +31,7 @@ import io.github.tbib.compose_ui.bottom_nav_bar.AdaptiveBottomNavBar
 import io.github.tbib.compose_ui.bottom_nav_bar.AdaptiveBottomNavBarItem
 import io.github.tbib.compose_ui.bottom_nav_bar.AdaptiveBottomNavItemIcon
 import io.github.tbib.compose_ui.bottom_nav_bar.AdaptiveBottomNavItemTitle
+import io.github.tbib.compose_ui_app.dialogs.DeleteDialogQuestion
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 val items = listOf(
@@ -62,10 +66,25 @@ val items = listOf(
     ),
 )
 
+
 @Composable
 @Preview
 fun App() {
     var selectedIndex by remember { mutableStateOf(0) }
+    var showDialog by remember { mutableStateOf(false) }
+
+    if (showDialog) {
+        DeleteDialogQuestion(
+            onConfirm = {
+                showDialog = false
+            },
+            onDismiss = {
+                showDialog = false
+            },
+            args = "Some item to delete"
+        )
+    }
+
     MaterialTheme {
         Scaffold(
             bottomBar = {
@@ -88,7 +107,7 @@ fun App() {
                 )
             }
         ) { paddingValues ->
-            Column(
+            Box(
                 modifier = Modifier.padding(paddingValues)
             ) {
                 when (selectedIndex) {
@@ -107,9 +126,24 @@ fun App() {
                         }
                     }
 
-                    1 -> LazyColumn {
+                    1 -> LazyColumn(
+                        modifier = Modifier.fillMaxSize().padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(
+                            10.dp,
+                            alignment = Alignment.CenterVertically
+                        ),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+
+                        ) {
                         item {
                             AdaptiveCircularProgressIndicator()
+                        }
+                        item {
+                            Button(onClick = {
+                                showDialog = true
+                            }) {
+                                Text("Show Dialog", color = Color.White)
+                            }
                         }
                     }
                 }
