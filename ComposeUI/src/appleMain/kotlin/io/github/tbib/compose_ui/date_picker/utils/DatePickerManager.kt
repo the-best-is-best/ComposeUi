@@ -44,6 +44,7 @@ class DatePickerManager internal constructor(
 
     @OptIn(BetaInteropApi::class, ExperimentalTime::class)
     private val datePickerDelegate = object : NSObject() {
+        @Suppress("unused")
         @ObjCAction
         fun onDateChanged(sender: UIDatePicker) {
             val components = NSCalendar.currentCalendar.components(
