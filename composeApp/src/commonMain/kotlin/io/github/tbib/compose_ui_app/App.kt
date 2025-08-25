@@ -3,6 +3,7 @@ package io.github.tbib.compose_ui_app
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,6 +15,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Details
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Button
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -35,6 +37,8 @@ import io.github.tbib.compose_ui.bottom_nav_bar.AdaptiveBottomNavBar
 import io.github.tbib.compose_ui.bottom_nav_bar.AdaptiveBottomNavBarItem
 import io.github.tbib.compose_ui.bottom_nav_bar.AdaptiveBottomNavItemIcon
 import io.github.tbib.compose_ui.bottom_nav_bar.AdaptiveBottomNavItemTitle
+import io.github.tbib.compose_ui.bottom_sheet.AdaptiveBottomSheet
+import io.github.tbib.compose_ui.bottom_sheet.rememberAdaptiveSheetState
 import io.github.tbib.compose_ui.date_picker.AdaptiveDatePicker
 import io.github.tbib.compose_ui.date_picker.rememberAdaptiveDatePickerState
 import io.github.tbib.compose_ui.time_picker.AdaptiveTimePicker
@@ -85,6 +89,32 @@ fun App() {
     var selectedIndex by remember { mutableStateOf(0) }
     var showDialog by remember { mutableStateOf(false) }
 
+    var showBottomSheet by remember { mutableStateOf(false) }
+
+    val sheetState = rememberAdaptiveSheetState(
+        skipPartiallyExpanded = false,
+
+        )
+    if (showBottomSheet) {
+        AdaptiveBottomSheet(
+            onDismissRequest = {
+                showBottomSheet = false
+            },
+            adaptiveSheetState = sheetState,
+            content = {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(0.9f)
+                        .background(Color.White),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text("This is a bottom sheet", color = Color.Black)
+                }
+            }
+
+        )
+    }
     if (showDialog) {
         DeleteDialogQuestion(
             onConfirm = {
@@ -155,6 +185,15 @@ fun App() {
                         horizontalAlignment = Alignment.CenterHorizontally,
 
                         ) {
+                        item {
+                            ElevatedButton(
+                                onClick = {
+                                    showBottomSheet = true
+                                }
+                            ) {
+                                Text("Show Bottom sheet", color = Color.Black)
+                            }
+                        }
                         item {
                             AdaptiveCircularProgressIndicator()
                         }

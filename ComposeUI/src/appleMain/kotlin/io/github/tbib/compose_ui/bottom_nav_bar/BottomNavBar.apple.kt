@@ -6,7 +6,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.viewinterop.UIKitView
-import io.github.tbib.compose_ui.utils.resize
 import io.github.tbib.compose_ui.utils.toUiColor
 import kotlinx.cinterop.ExperimentalForeignApi
 import platform.Foundation.NSDictionary
@@ -74,13 +73,13 @@ actual fun <Route> AdaptiveBottomNavBar(
 
                 // --- TAB ITEMS ---
                 val tabBarItems = items.mapIndexed { _, item ->
-                    val iconSize = item.icon.iconSize.value.toDouble()
+//                    val iconSize = item.icon.iconSize.value.toDouble()
                     val unselectedImage = UIImage.systemImageNamed(item.icon.getIosUnselectedIcon())
-                        ?.resize(iconSize, iconSize)
+//                        ?.resize(iconSize, iconSize)
                         ?.imageWithRenderingMode(UIImageRenderingMode.UIImageRenderingModeAlwaysTemplate)
 
                     val selectedImage = UIImage.systemImageNamed(item.icon.iosIconSelected)
-                        ?.resize(iconSize, iconSize)
+//                        ?.resize(iconSize, iconSize)
                         ?.imageWithRenderingMode(UIImageRenderingMode.UIImageRenderingModeAlwaysTemplate)
 
                     val tabBarItem = UITabBarItem(
