@@ -63,6 +63,7 @@ kotlin {
             dependsOn(commonMain)
             dependencies {
                 implementation(compose.material3AdaptiveNavigationSuite) // Shared Compose Material layer
+                implementation(compose.materialIconsExtended)
             }
         }
 

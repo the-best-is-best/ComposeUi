@@ -12,8 +12,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.More
 import androidx.compose.material.icons.filled.Details
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.Button
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -31,8 +33,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import io.github.tbib.compose_ui.adaptive_circular_progressIndicator.AdaptiveCircularProgressIndicator
+import io.github.tbib.compose_ui.app_bar.ActionItem
+import io.github.tbib.compose_ui.app_bar.AdaptiveAppBar
 import io.github.tbib.compose_ui.bottom_nav_bar.AdaptiveBottomNavBar
 import io.github.tbib.compose_ui.bottom_nav_bar.AdaptiveBottomNavBarItem
 import io.github.tbib.compose_ui.bottom_nav_bar.AdaptiveBottomNavItemIcon
@@ -139,6 +144,26 @@ fun App() {
     var switch2 by remember { mutableStateOf(true) }
     MaterialTheme {
         Scaffold(
+            topBar = {
+                AdaptiveAppBar(
+                    title = "adaptive-ui-demo",
+                    titleStyle = TextStyle.Default.copy(
+                        color = Color.Black
+                    ),
+                    actions = listOf(
+                        ActionItem(
+                            androidIcon = Icons.Default.Notifications,
+                            iosIconName = "bell.fill",
+                            onClick = { println("Notifications clicked") }
+                        ),
+                        ActionItem(
+                            androidIcon = Icons.AutoMirrored.Filled.More,
+                            iosIconName = "ellipsis",
+                            onClick = { println("More clicked") }
+                        )
+                    )
+                )
+            },
             bottomBar = {
                 AdaptiveBottomNavBar(
                     items = items,
