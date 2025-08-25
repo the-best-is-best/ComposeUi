@@ -43,6 +43,7 @@ import io.github.tbib.compose_ui.date_picker.AdaptiveDatePicker
 import io.github.tbib.compose_ui.date_picker.rememberAdaptiveDatePickerState
 import io.github.tbib.compose_ui.time_picker.AdaptiveTimePicker
 import io.github.tbib.compose_ui.time_picker.rememberAdaptiveTimePickerState
+import io.github.tbib.compose_ui.toggle.AdaptiveSwitch
 import io.github.tbib.compose_ui_app.dialogs.DeleteDialogQuestion
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -135,6 +136,8 @@ fun App() {
         is24Hour = false,
 
         )
+    var switch1 by remember { mutableStateOf(false) }
+    var switch2 by remember { mutableStateOf(true) }
     MaterialTheme {
         Scaffold(
             bottomBar = {
@@ -193,6 +196,20 @@ fun App() {
                             ) {
                                 Text("Show Bottom sheet", color = Color.Black)
                             }
+                        }
+                        items(2) { i ->
+                            AdaptiveSwitch(
+                                checked = if (i == 0) switch1 else switch2,
+                                onCheckedChange = { v ->
+                                    if (i == 0) {
+                                        switch1 = v
+                                    } else {
+                                        switch2 = v
+                                    }
+                                },
+                                modifier = Modifier.padding(8.dp),
+
+                                )
                         }
                         item {
                             AdaptiveCircularProgressIndicator()
