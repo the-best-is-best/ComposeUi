@@ -41,12 +41,12 @@ import io.github.tbib.compose_ui.bottom_sheet.AdaptiveBottomSheet
 import io.github.tbib.compose_ui.bottom_sheet.rememberAdaptiveSheetState
 import io.github.tbib.compose_ui.date_picker.AdaptiveDatePicker
 import io.github.tbib.compose_ui.date_picker.rememberAdaptiveDatePickerState
+import io.github.tbib.compose_ui.slider.AdaptiveSlider
 import io.github.tbib.compose_ui.time_picker.AdaptiveTimePicker
 import io.github.tbib.compose_ui.time_picker.rememberAdaptiveTimePickerState
 import io.github.tbib.compose_ui.toggle.AdaptiveSwitch
 import io.github.tbib.compose_ui_app.dialogs.DeleteDialogQuestion
 import kotlinx.coroutines.delay
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
@@ -85,13 +85,12 @@ val items = listOf(
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalTime::class)
 @Composable
-@Preview
 fun App() {
     var selectedIndex by remember { mutableStateOf(0) }
     var showDialog by remember { mutableStateOf(false) }
 
     var showBottomSheet by remember { mutableStateOf(false) }
-
+    var slider by remember { mutableStateOf(0f) }
     val sheetState = rememberAdaptiveSheetState(
         skipPartiallyExpanded = false,
 
@@ -212,11 +211,20 @@ fun App() {
                                 )
                         }
                         item {
-                            AdaptiveCircularProgressIndicator()
+                            AdaptiveSlider(
+                                value = slider,
+                                onValueChanged = {
+                                    slider = it
+                                    println("Slider value: $it")
+                                }
+                            )
                         }
-                        item {
-                            ProgressDemo()
-                        }
+//                        item {
+//                            AdaptiveCircularProgressIndicator()
+//                        }
+//                        item {
+//                            ProgressDemo()
+//                        }
                         item {
                             Button(onClick = {
                                 showDialog = true
