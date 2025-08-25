@@ -1,5 +1,6 @@
 package io.github.tbib.compose_ui.bottom_nav_bar
 
+import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -33,7 +34,8 @@ actual fun <Route> AdaptiveBottomNavBar(
     items: List<AdaptiveBottomNavBarItem<Route>>,
     alwaysShowLabel: Boolean,
     selectedIndex: Int,
-    onSelectedItemIndexChange: (Int) -> Unit
+    onSelectedItemIndexChange: (Int) -> Unit,
+    androidColors: NavigationBarItemColors,
 ) {
     // We need to remember the delegate so it's not garbage-collected.
     val delegate = remember {
