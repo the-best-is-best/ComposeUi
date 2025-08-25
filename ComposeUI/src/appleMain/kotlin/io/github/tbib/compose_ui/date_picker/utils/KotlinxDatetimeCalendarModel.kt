@@ -1,4 +1,4 @@
-package io.github.tbib.compose_ui.date_time_picker.utils
+package io.github.tbib.compose_ui.date_picker.utils
 
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.atStartOfDayIn

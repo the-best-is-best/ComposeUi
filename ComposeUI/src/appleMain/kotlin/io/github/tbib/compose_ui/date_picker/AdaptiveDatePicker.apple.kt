@@ -1,4 +1,4 @@
-package io.github.tbib.compose_ui.date_time_picker
+package io.github.tbib.compose_ui.date_picker
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.UIKitInteropInteractionMode
 import androidx.compose.ui.viewinterop.UIKitInteropProperties
 import androidx.compose.ui.viewinterop.UIKitView
-import io.github.tbib.compose_ui.date_time_picker.utils.DatePickerManager
+import io.github.tbib.compose_ui.date_picker.utils.DatePickerManager
 import io.github.tbib.compose_ui.utils.surfaceColorAtElevation
 import platform.UIKit.UIDatePicker
 

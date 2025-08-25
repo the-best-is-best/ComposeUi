@@ -35,8 +35,10 @@ import io.github.tbib.compose_ui.bottom_nav_bar.AdaptiveBottomNavBar
 import io.github.tbib.compose_ui.bottom_nav_bar.AdaptiveBottomNavBarItem
 import io.github.tbib.compose_ui.bottom_nav_bar.AdaptiveBottomNavItemIcon
 import io.github.tbib.compose_ui.bottom_nav_bar.AdaptiveBottomNavItemTitle
-import io.github.tbib.compose_ui.date_time_picker.AdaptiveDatePicker
-import io.github.tbib.compose_ui.date_time_picker.rememberAdaptiveDatePickerState
+import io.github.tbib.compose_ui.date_picker.AdaptiveDatePicker
+import io.github.tbib.compose_ui.date_picker.rememberAdaptiveDatePickerState
+import io.github.tbib.compose_ui.time_picker.AdaptiveTimePicker
+import io.github.tbib.compose_ui.time_picker.rememberAdaptiveTimePickerState
 import io.github.tbib.compose_ui_app.dialogs.DeleteDialogQuestion
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -60,7 +62,7 @@ val items = listOf(
     ),
     AdaptiveBottomNavBarItem<Routes>(
         title = AdaptiveBottomNavItemTitle(
-            text = "History",
+            text = "Details",
             selectedColor = Color.Red,
             unselectedColor = Color.Gray
 
@@ -99,6 +101,10 @@ fun App() {
     val datePickerState = rememberAdaptiveDatePickerState(
         initialSelectedDateMillis = initialMillis,
     )
+    val timePickerState = rememberAdaptiveTimePickerState(
+        is24Hour = false,
+
+        )
     MaterialTheme {
         Scaffold(
             bottomBar = {
@@ -165,6 +171,11 @@ fun App() {
                         item {
                             AdaptiveDatePicker(
                                 state = datePickerState
+                            )
+                        }
+                        item {
+                            AdaptiveTimePicker(
+                                state = timePickerState
                             )
                         }
                     }

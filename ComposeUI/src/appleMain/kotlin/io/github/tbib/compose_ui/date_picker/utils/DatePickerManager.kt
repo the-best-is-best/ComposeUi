@@ -1,11 +1,11 @@
-package io.github.tbib.compose_ui.date_time_picker.utils
+package io.github.tbib.compose_ui.date_picker.utils
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
-import io.github.tbib.compose_ui.date_time_picker.UIKitDisplayMode
-import io.github.tbib.compose_ui.date_time_picker.getCalendarLocalDefault
+import io.github.tbib.compose_ui.date_picker.UIKitDisplayMode
+import io.github.tbib.compose_ui.date_picker.getCalendarLocalDefault
 import io.github.tbib.compose_ui.utils.applyTheme
 import io.github.tbib.compose_ui.utils.isDark
 import io.github.tbib.compose_ui.utils.toUiColor

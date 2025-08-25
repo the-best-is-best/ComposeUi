@@ -1,4 +1,4 @@
-package io.github.tbib.compose_ui.date_time_picker
+package io.github.tbib.compose_ui.date_picker
 
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerColors

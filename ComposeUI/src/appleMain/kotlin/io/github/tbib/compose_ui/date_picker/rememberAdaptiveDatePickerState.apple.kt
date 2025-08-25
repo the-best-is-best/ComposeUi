@@ -1,4 +1,4 @@
-package io.github.tbib.compose_ui.date_time_picker
+package io.github.tbib.compose_ui.date_picker
 
 import androidx.compose.material3.CalendarLocale
 import androidx.compose.material3.DatePickerState
@@ -9,7 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.setValue
-import io.github.tbib.compose_ui.date_time_picker.utils.KotlinxDatetimeCalendarModel
+import io.github.tbib.compose_ui.date_picker.utils.KotlinxDatetimeCalendarModel
 import platform.Foundation.currentLocale
 
 /**
