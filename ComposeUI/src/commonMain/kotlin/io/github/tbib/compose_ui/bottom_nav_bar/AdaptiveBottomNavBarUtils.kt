@@ -1,11 +1,10 @@
 package io.github.tbib.compose_ui.bottom_nav_bar
 
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.github.tbib.compose_ui.icons.IosIcon
 
 /**
  * Represents a single bottom navigation item
@@ -15,39 +14,26 @@ data class AdaptiveBottomNavBarItem<Route>(
     val icon: AdaptiveBottomNavItemIcon,
     val route: Route,
 )
-
 /**
- * Represents the icon of the bottom nav item
- * selectedIcon is used when the item is selected.
- * unSelectedIcon is used when the item is not selected (if null, selectedIcon is
- * iosSelectedIcon is used for both states on iOS).
- * iosIconUnselected is used when the item is not selected on iOS (if null, iosIconSelected is used for both states on iOS
- * platforms supporting it).
- * @param selectedIcon The icon to use when the item is selected.
- * @param unSelectedIcon The icon to use when the item is not selected. If null
- *  @param iconSize The size of the icon.
- * @param iosIconSelected The name of the SF Symbol to use when the item is selected
- * on iOS platforms supporting it.
- * @param iosIconUnselected The name of the SF Symbol to use when the item is not selected
- * on iOS platforms supporting it. If null, iosIconSelected is used for
- * @param selectedColor The color to use when the item is selected.
- * @param unselectedColor The color to use when the item is not selected.
+ * Represents the icon of the bottom nav item.
+ *
+ * @param androidSelectedIcon The icon to display when the item is selected (for Android).
+ * @param androidUnSelectedIcon The icon to display when the item is not selected (for Android). If null, the selected icon will be used.
+ * @param iosSelectedIcon The icon to display when the item is selected (for iOS).
+ * @param iosUnselectedIcon The icon to display when the item is not selected (for iOS). If null, the selected icon will be used.
  */
 data class AdaptiveBottomNavItemIcon(
-    val selectedIcon: ImageVector,
-    val unSelectedIcon: ImageVector? = null,
-    val iconSize: Dp = 24.dp,
-    val iosIconSelected: String,
-    val iosIconUnselected: String? = null,
-    val selectedColor: Color = Color.Black,
-    val unselectedColor: Color = Color.Black,
+    val androidSelectedIcon: @Composable () -> Unit,
+    val androidUnSelectedIcon: (@Composable () -> Unit)? = null,
+    val iosSelectedIcon: IosIcon,
+    val iosUnselectedIcon: IosIcon? = null,
 ) {
-    fun getUnselectedIcon(): ImageVector {
-        return unSelectedIcon ?: selectedIcon
+    fun getAndroidUnselectedIcon(): @Composable () -> Unit {
+        return androidUnSelectedIcon ?: androidSelectedIcon
     }
 
-    fun getIosUnselectedIcon(): String {
-        return iosIconUnselected ?: iosIconSelected
+    fun getIosUnselectedIcon(): IosIcon {
+        return iosUnselectedIcon ?: iosSelectedIcon
     }
 }
 

@@ -19,6 +19,7 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.Button
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -46,6 +47,8 @@ import io.github.tbib.compose_ui.bottom_sheet.AdaptiveBottomSheet
 import io.github.tbib.compose_ui.bottom_sheet.rememberAdaptiveSheetState
 import io.github.tbib.compose_ui.date_picker.AdaptiveDatePicker
 import io.github.tbib.compose_ui.date_picker.rememberAdaptiveDatePickerState
+import io.github.tbib.compose_ui.icons.AdaptiveIcon
+import io.github.tbib.compose_ui.icons.IosIcon
 import io.github.tbib.compose_ui.slider.AdaptiveSlider
 import io.github.tbib.compose_ui.time_picker.AdaptiveTimePicker
 import io.github.tbib.compose_ui.time_picker.rememberAdaptiveTimePickerState
@@ -55,43 +58,70 @@ import kotlinx.coroutines.delay
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
-val items = listOf(
-    AdaptiveBottomNavBarItem<Routes>(
-        title = AdaptiveBottomNavItemTitle(
-            text = "Home",
-            selectedColor = Color.Red,
-            unselectedColor = Color.Gray
-        ),
-        icon = AdaptiveBottomNavItemIcon(
-            selectedIcon = Icons.Filled.Home,
-            iosIconSelected = "house.fill",
-            selectedColor = Color.Blue,
-            unselectedColor = Color.Gray
-        ),
-        route = Routes.Home
-    ),
-    AdaptiveBottomNavBarItem<Routes>(
-        title = AdaptiveBottomNavItemTitle(
-            text = "Details",
-            selectedColor = Color.Red,
-            unselectedColor = Color.Gray
-
-        ),
-        icon = AdaptiveBottomNavItemIcon(
-            selectedIcon = Icons.Filled.Details,
-            iosIconSelected = "ellipsis.circle", // Details
-            selectedColor = Color.Blue,
-            unselectedColor = Color.Gray
-        ),
-        route = Routes.Details
-    ),
-)
-
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalTime::class)
 @Composable
 fun App() {
     var selectedIndex by remember { mutableStateOf(0) }
+
+    val items = listOf(
+        AdaptiveBottomNavBarItem<Routes>(
+            title = AdaptiveBottomNavItemTitle(
+                text = "Home",
+                selectedColor = Color.Red,
+                unselectedColor = Color.Gray
+            ),
+            icon = AdaptiveBottomNavItemIcon(
+                androidSelectedIcon = {
+                    Icon(
+                        Icons.Filled.Home,
+                        contentDescription = null,
+                        tint = if (selectedIndex == 0) Color.Blue else Color.Gray,
+                        modifier = Modifier.size(30.dp)
+                    )
+                },
+                iosSelectedIcon = IosIcon.SystemIcon(
+                    name = "house.fill"
+                )
+//               iosSelectedIcon = IosIcon.CustomIcon(
+//                    fontFamily = "FontAwesome7Free-Solid",
+//                    name = "\uf015", // home
+//                    size = 30,
+//                    tint = Color.Blue
+//                )
+
+            ),
+            route = Routes.Home
+        ),
+        AdaptiveBottomNavBarItem<Routes>(
+            title = AdaptiveBottomNavItemTitle(
+                text = "Details",
+                selectedColor = Color.Red,
+                unselectedColor = Color.Gray
+
+            ),
+            icon = AdaptiveBottomNavItemIcon(
+                androidSelectedIcon = {
+                    Icon(
+                        Icons.Filled.Details,
+                        contentDescription = null,
+                        tint = if (selectedIndex == 1) Color.Blue else Color.Gray,
+                        modifier = Modifier.size(30.dp)
+                    )
+                },
+                iosSelectedIcon = IosIcon.CustomIcon(
+                    fontFamily = "FontAwesome7Free-Solid",
+                    name = "\uf05a", // info circle
+                    size = 30,
+                    tint = Color.Blue
+                )
+            ),
+            route = Routes.Details
+        ),
+    )
+
+
+
     var showDialog by remember { mutableStateOf(false) }
 
     var showBottomSheet by remember { mutableStateOf(false) }
