@@ -19,6 +19,7 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.Button
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -46,6 +47,8 @@ import io.github.tbib.compose_ui.bottom_sheet.AdaptiveBottomSheet
 import io.github.tbib.compose_ui.bottom_sheet.rememberAdaptiveSheetState
 import io.github.tbib.compose_ui.date_picker.AdaptiveDatePicker
 import io.github.tbib.compose_ui.date_picker.rememberAdaptiveDatePickerState
+import io.github.tbib.compose_ui.icons.AdaptiveIcon
+import io.github.tbib.compose_ui.icons.IosIcon
 import io.github.tbib.compose_ui.slider.AdaptiveSlider
 import io.github.tbib.compose_ui.time_picker.AdaptiveTimePicker
 import io.github.tbib.compose_ui.time_picker.rememberAdaptiveTimePickerState
