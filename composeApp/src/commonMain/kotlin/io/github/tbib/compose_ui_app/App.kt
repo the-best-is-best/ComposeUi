@@ -236,6 +236,23 @@ fun App() {
                                 )
                         }
                         item {
+                            AdaptiveIcon(
+                                androidIcon = {
+                                    Icon(
+                                        Icons.AutoMirrored.Filled.More,
+                                        contentDescription = null,
+                                        tint = Color.Magenta
+                                    )
+                                },
+                                iosIcon = IosIcon.CustomIcon(
+                                    fontFamily = "FontAwesome7Free-Solid",
+                                    name = "\uf05a",
+                                    // tint = Color.Magenta,
+                                    size = 24
+                                )
+                            )
+                        }
+                        item {
                             AdaptiveSlider(
                                 value = slider,
                                 onValueChanged = {
