@@ -16,7 +16,6 @@ expect fun AdaptiveTextButton(
     isEnabled: Boolean = true,
     text: String,
     fontSize: TextUnit = AdaptiveButtonDefaults.DefaultFontSize,
-    cornerRadius: Double = AdaptiveButtonDefaults.CornerRadius,
     shape: Shape = androidx.compose.material3.Shapes().small,
     colors: AdaptiveTextButtonColors = AdaptiveButtonDefaults.colors(),
     elevation: ButtonElevation? = null,

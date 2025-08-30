@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.UIKitView
 import io.github.tbib.compose_ui.utils.toUiColor
+import kotlinx.cinterop.BetaInteropApi
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.ObjCAction
 import platform.CoreGraphics.CGRectMake
@@ -18,7 +19,7 @@ import platform.UIKit.UISwitch
 import platform.UIKit.accessibilityHint
 import platform.darwin.NSObject
 
-@OptIn(ExperimentalForeignApi::class)
+@OptIn(ExperimentalForeignApi::class, BetaInteropApi::class)
 @Composable
 actual fun AdaptiveSwitch(
     modifier: Modifier,
@@ -46,6 +47,7 @@ actual fun AdaptiveSwitch(
         object : NSObject() {
             @ObjCAction
             fun switchChanged() {
+                if (isEnabled)
                 changeCallback.value(uiSwitch.on)
             }
         }

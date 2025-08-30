@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.More
@@ -36,6 +37,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import io.github.tbib.compose_ui.adaptive_circular_progressIndicator.AdaptiveCircularProgressIndicator
+import io.github.tbib.compose_ui.adaptive_tile.AdaptiveTile
 import io.github.tbib.compose_ui.app_bar.ActionItem
 import io.github.tbib.compose_ui.app_bar.AdaptiveAppBar
 import io.github.tbib.compose_ui.bottom_nav_bar.AdaptiveBottomNavBar
@@ -47,6 +49,7 @@ import io.github.tbib.compose_ui.bottom_sheet.rememberAdaptiveSheetState
 import io.github.tbib.compose_ui.date_picker.AdaptiveDatePicker
 import io.github.tbib.compose_ui.date_picker.rememberAdaptiveDatePickerState
 import io.github.tbib.compose_ui.icon_button.AdaptiveIconButton
+import io.github.tbib.compose_ui.icons.AdaptiveIcons
 import io.github.tbib.compose_ui.icons.IosIcon
 import io.github.tbib.compose_ui.slider.AdaptiveSlider
 import io.github.tbib.compose_ui.text_button.AdaptiveTextButton
@@ -238,25 +241,61 @@ fun App() {
 
                                 )
                         }
+                        items(2) { i ->
+                            AdaptiveTile(
+                                modifier = Modifier.clip(
+                                    RoundedCornerShape(16.dp)
+                                ),
+                                onClick = {
+                                    println("clicked $i")
+                                },
+                                title = "Item Title $i",
+                                subtitle = "Subtitle for item $i",
+                                isEnabled = i != 1,
+                                leadingIcon = AdaptiveIcons(
+                                    androidIcon = {
+                                        Icon(
+                                            imageVector = if (i == 0) Icons.Filled.Home else Icons.Filled.Details,
+                                            contentDescription = null,
+                                            tint = if (i != 1) Color.Blue else Color.Gray
+                                        )
+                                    },
+                                    iosIcon = IosIcon.SystemIcon(
+                                        "house.fill",
+                                        tint = if (i != 1) Color.Blue else Color.Gray,
+                                    )
+                                )
+
+
+                            )
+                        }
                         item {
                             AdaptiveIconButton(
+                                modifier = Modifier.clip(
+                                    RoundedCornerShape(
+                                        CornerSize(100.dp)
+                                    )
+                                ),
                                 text = "Icon Button",
                                 onClick = {
                                     println("Icon Button clicked")
                                 },
-                                androidIcon = {
-                                    Icon(
-                                        Icons.AutoMirrored.Filled.More,
-                                        contentDescription = null,
-                                        tint = Color.Magenta
+                                adaptiveIcons = AdaptiveIcons(
+                                    androidIcon = {
+                                        Icon(
+                                            Icons.AutoMirrored.Filled.More,
+                                            contentDescription = null,
+                                            tint = Color.Magenta
+                                        )
+                                    },
+                                    iosIcon = IosIcon.CustomIcon(
+                                        fontFamily = "FontAwesome7Free-Solid",
+                                        name = "\uf05a",
+                                        tint = Color.Magenta,
+                                        size = 24
                                     )
-                                },
-                                iosIcon = IosIcon.CustomIcon(
-                                    fontFamily = "FontAwesome7Free-Solid",
-                                    name = "\uf05a",
-                                    tint = Color.Magenta,
-                                    size = 24
-                                )
+                                ),
+
                             )
                         }
                         item {

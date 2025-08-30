@@ -22,7 +22,6 @@ actual fun AdaptiveTextButton(
     isEnabled: Boolean,
     text: String,
     fontSize: TextUnit,
-    cornerRadius: Double,
     shape: Shape,
     colors: AdaptiveTextButtonColors,
     elevation: ButtonElevation?,

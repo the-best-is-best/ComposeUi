@@ -38,10 +38,5 @@ object AdaptiveButtonDefaults {
      */
     val DefaultFontSize: TextUnit = 14.sp
 
-    /**
-     * The default corner radius for [AdaptiveTextButton], expressed in dp.
-     */
-    const val CornerRadius = 8.0
-
 
 }

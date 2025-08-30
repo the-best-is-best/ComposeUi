@@ -7,12 +7,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.UIKitView
-import io.github.tbib.compose_ui.icons.IosIcon
+import io.github.tbib.compose_ui.icons.AdaptiveIcons
 import io.github.tbib.compose_ui.icons.render
 import io.github.tbib.compose_ui.text_button.AdaptiveTextButtonColors
 import io.github.tbib.compose_ui.utils.toUiColor
@@ -39,14 +40,13 @@ actual fun AdaptiveIconButton(
     isEnabled: Boolean,
     text: String?,
     fontSize: TextUnit,
-    cornerRadius: Double,
     shape: Shape,
     colors: AdaptiveTextButtonColors,
     elevation: androidx.compose.material3.ButtonElevation?,
     border: BorderStroke?,
     contentPadding: PaddingValues,
-    androidIcon: @Composable () -> Unit,
-    iosIcon: IosIcon
+    adaptiveIcons: AdaptiveIcons
+
 ) {
     val clickCallback = remember { mutableStateOf(onClick) }
 
@@ -54,13 +54,14 @@ actual fun AdaptiveIconButton(
         object : NSObject() {
             @ObjCAction
             fun tapped() {
+                if (isEnabled)
                 clickCallback.value()
             }
         }
     }
 
     // حساب الحجم الديناميكي للنص + الأيقونة
-    val buttonSize = remember(text, fontSize, iosIcon) {
+    val buttonSize = remember(text, fontSize, adaptiveIcons.iosIcon) {
         val labelWidth = text?.let {
             UILabel().apply {
                 this.text = it
@@ -78,9 +79,11 @@ actual fun AdaptiveIconButton(
         } ?: 0.0
 
         val iconSize =
-            iosIcon.render().apply { sizeToFit() }.intrinsicContentSize.useContents { width }
+            adaptiveIcons.iosIcon.render()
+                .apply { sizeToFit() }.intrinsicContentSize.useContents { width }
         val iconHeight =
-            iosIcon.render().apply { sizeToFit() }.intrinsicContentSize.useContents { height }
+            adaptiveIcons.iosIcon.render()
+                .apply { sizeToFit() }.intrinsicContentSize.useContents { height }
 
         val width = labelWidth + iconSize + 8.0 + 24.0 // spacing + padding
         val height = max(labelHeight, iconHeight) + 16.0 // top-bottom padding
@@ -93,7 +96,6 @@ actual fun AdaptiveIconButton(
             val view = UIView().apply {
                 backgroundColor =
                     (if (isEnabled) colors.containerColor else colors.disabledContainerColor).toUiColor()
-                layer.cornerRadius = cornerRadius
                 clipsToBounds = true
             }
 
@@ -108,7 +110,7 @@ actual fun AdaptiveIconButton(
             }
 
             // أيقونة
-            val iconView = iosIcon.render().apply {
+            val iconView = adaptiveIcons.iosIcon.render().apply {
                 translatesAutoresizingMaskIntoConstraints = false
                 widthAnchor.constraintEqualToConstant(24.0).active = true
                 heightAnchor.constraintEqualToConstant(24.0).active = true
@@ -139,6 +141,8 @@ actual fun AdaptiveIconButton(
             view.backgroundColor =
                 (if (isEnabled) colors.containerColor else colors.disabledContainerColor).toUiColor()
         },
-        modifier = modifier.defaultMinSize(buttonSize.width, buttonSize.height)
+        modifier = modifier.clip(
+            shape = shape
+        ).defaultMinSize(buttonSize.width, buttonSize.height)
     )
 }

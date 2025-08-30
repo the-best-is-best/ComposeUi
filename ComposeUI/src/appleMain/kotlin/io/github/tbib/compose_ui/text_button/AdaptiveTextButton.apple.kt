@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.TextUnit
@@ -37,7 +38,6 @@ actual fun AdaptiveTextButton(
     isEnabled: Boolean,
     text: String,
     fontSize: TextUnit,
-    cornerRadius: Double,
     shape: Shape,
     colors: AdaptiveTextButtonColors,
     elevation: ButtonElevation?,
@@ -49,6 +49,7 @@ actual fun AdaptiveTextButton(
         object : NSObject() {
             @ObjCAction
             fun tapped() {
+                if (isEnabled)
                 clickCallback.value()
             }
         }
@@ -80,7 +81,6 @@ actual fun AdaptiveTextButton(
                     forState = UIControlStateNormal
                 )
                 contentEdgeInsets = UIEdgeInsetsMake(8.0, 16.0, 8.0, 16.0)
-                layer.cornerRadius = cornerRadius
                 clipsToBounds = true
 
                 if (border != null) {
@@ -104,9 +104,8 @@ actual fun AdaptiveTextButton(
             view.backgroundColor =
                 if (isEnabled) colors.containerColor.toUiColor() else colors.disabledContainerColor.toUiColor()
             view.titleLabel?.font = UIFont.systemFontOfSize(fontSize.value.toDouble())
-            view.layer.cornerRadius = cornerRadius
         },
-        modifier = modifier.defaultMinSize(buttonSize.width, buttonSize.height)
+        modifier = modifier.clip(shape).defaultMinSize(buttonSize.width, buttonSize.height)
     )
 }
 

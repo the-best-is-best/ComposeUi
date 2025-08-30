@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -16,7 +17,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import io.github.tbib.compose_ui.icons.AdaptiveIcon
-import io.github.tbib.compose_ui.icons.IosIcon
+import io.github.tbib.compose_ui.icons.AdaptiveIcons
 import io.github.tbib.compose_ui.text_button.AdaptiveTextButtonColors
 
 @Composable
@@ -26,14 +27,13 @@ actual fun AdaptiveIconButton(
     isEnabled: Boolean,
     text: String?,
     fontSize: TextUnit,
-    cornerRadius: Double,
     shape: Shape,
     colors: AdaptiveTextButtonColors,
     elevation: ButtonElevation?,
     border: BorderStroke?,
     contentPadding: androidx.compose.foundation.layout.PaddingValues,
-    androidIcon: @Composable () -> Unit,
-    iosIcon: IosIcon
+    adaptiveIcons: AdaptiveIcons
+
 ) {
     Button(
         onClick = onClick,
@@ -46,8 +46,11 @@ actual fun AdaptiveIconButton(
         contentPadding = contentPadding,
         interactionSource = remember { MutableInteractionSource() }
     ) {
-        Row {
-            AdaptiveIcon(androidIcon = androidIcon, iosIcon = iosIcon)
+        Row(
+            Modifier.padding(10.dp)
+        ) {
+
+            AdaptiveIcon(adaptiveIcons)
             if (text != null) {
                 Spacer(modifier = Modifier.size(8.dp))
                 Text(

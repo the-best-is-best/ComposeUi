@@ -8,12 +8,11 @@ import androidx.compose.ui.viewinterop.UIKitView
 
 @Composable
 actual fun AdaptiveIcon(
-    androidIcon: @Composable () -> Unit,
-    iosIcon: IosIcon
+    adaptiveIcons: AdaptiveIcons
 ) {
     UIKitView(
         factory = {
-            iosIcon.render()
+            adaptiveIcons.iosIcon.render()
         },
         modifier = Modifier.defaultMinSize(32.dp, 32.dp)
     )

@@ -4,8 +4,7 @@ import androidx.compose.runtime.Composable
 
 @Composable
 actual fun AdaptiveIcon(
-    androidIcon: @Composable () -> Unit,
-    iosIcon: IosIcon
+    adaptiveIcons: AdaptiveIcons
 ) {
-    androidIcon()
+    adaptiveIcons.androidIcon()
 }
