@@ -142,12 +142,3 @@ actual fun AdaptiveIconButton(
         modifier = modifier.defaultMinSize(buttonSize.width, buttonSize.height)
     )
 }
-
-// Extension to extract color from Brush
-private val androidx.compose.ui.graphics.Brush.solidColorOr: (androidx.compose.ui.graphics.Color) -> androidx.compose.ui.graphics.Color
-    get() = { fallback ->
-        when (this) {
-            is androidx.compose.ui.graphics.SolidColor -> this.value
-            else -> fallback
-        }
-    }
