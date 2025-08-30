@@ -11,5 +11,4 @@ expect fun AdaptiveAppBar(
     showBackIfNull: Boolean = true,
     onBackClick: (() -> Unit)? = null,
     actions: List<ActionItem> = listOf(),
-
     )

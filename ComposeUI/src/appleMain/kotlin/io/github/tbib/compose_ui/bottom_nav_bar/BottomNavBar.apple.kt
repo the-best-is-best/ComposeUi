@@ -16,20 +16,22 @@ import platform.QuartzCore.kCAMediaTimingFunctionEaseInEaseOut
 import platform.QuartzCore.kCATransitionFade
 import platform.UIKit.NSForegroundColorAttributeName
 import platform.UIKit.NSLayoutConstraint
+import platform.UIKit.UIBlurEffect
+import platform.UIKit.UIBlurEffectStyle
 import platform.UIKit.UIColor
 import platform.UIKit.UIImage
 import platform.UIKit.UIImageRenderingMode
 import platform.UIKit.UITabBar
 import platform.UIKit.UITabBarDelegateProtocol
 import platform.UIKit.UITabBarItem
-import platform.UIKit.UIView
+import platform.UIKit.UIVisualEffectView
 import platform.darwin.NSObject
 
 @OptIn(ExperimentalForeignApi::class)
 @Composable
 actual fun <Route> AdaptiveBottomNavBar(
     modifier: Modifier,
-    elevation: Dp,
+    elevation: Dp, // Not used in this liquid glass implementation
     items: List<AdaptiveBottomNavBarItem<Route>>,
     alwaysShowLabel: Boolean,
     selectedIndex: Int,
@@ -51,6 +53,12 @@ actual fun <Route> AdaptiveBottomNavBar(
     UIKitView(
         factory = {
             // All UIKit view creation and configuration should happen here.
+
+            // 1. Create a UIVisualEffectView with a blur effect. This is the key to the "liquid glass" effect.
+            val blurEffect =
+                UIBlurEffect.effectWithStyle(UIBlurEffectStyle.UIBlurEffectStyleSystemUltraThinMaterial)
+            val container = UIVisualEffectView(effect = blurEffect)
+
             val tabBar = UITabBar().apply {
                 this.delegate = delegate
 
@@ -61,15 +69,11 @@ actual fun <Route> AdaptiveBottomNavBar(
                         items[selectedIndex].icon.unselectedColor.toUiColor()
                 }
 
-                // --- ELEVATION (SHADOW) ---
+                // 2. Remove the manual overrides. We want the UITabBar to be transparent
+                // so the blur effect from the container can show through.
                 this.backgroundImage = UIImage()
                 this.shadowImage = UIImage()
-                this.barTintColor = UIColor.whiteColor
-
-                // The shadow properties are on the container view, not the UITabBar itself,
-                // because the UITabBar's own shadow is part of its internal structure
-                // and hard to customize in this way. We will apply the shadow to a container
-                // view that holds the UITabBar.
+                this.barTintColor = UIColor.clearColor // Make the tab bar background transparent
 
                 // --- TAB ITEMS ---
                 val tabBarItems = items.mapIndexed { _, item ->
@@ -111,17 +115,8 @@ actual fun <Route> AdaptiveBottomNavBar(
             }
 
 
-            // Create a container view to hold the tab bar.
-            val container = UIView()
-            container.addSubview(tabBar)
-
-            // Apply shadow to the container view, not the tab bar.
-            container.layer.shadowOpacity = 0.3f
-            container.layer.shadowColor = UIColor.blackColor.CGColor
-            container.layer.shadowRadius = elevation.value.toDouble()
-            container.layer.shadowOffset =
-                platform.CoreGraphics.CGSizeMake(0.0, -1.0) // iOS shadow typically is on top
-            container.layer.masksToBounds = false
+            // 3. Add the UITabBar to the UIVisualEffectView container.
+            container.contentView.addSubview(tabBar)
 
             // Use Auto Layout to make the tab bar fill the container.
             tabBar.translatesAutoresizingMaskIntoConstraints = false
@@ -134,12 +129,13 @@ actual fun <Route> AdaptiveBottomNavBar(
                 )
             )
 
+            // Return the UIVisualEffectView which now holds the tab bar.
             container
         },
         update = {
             // This block is called when composable state changes.
             // We update the selected item and colors here.
-            val tabBar = (it.subviews.firstOrNull() as? UITabBar)
+            val tabBar = (it.contentView.subviews.firstOrNull() as? UITabBar)
 
             if (tabBar != null) {
                 // --- UPDATE ICON COLORS ON STATE CHANGE ---
@@ -174,7 +170,7 @@ actual fun <Route> AdaptiveBottomNavBar(
         },
         onRelease = {
             // Clean up the delegate to prevent memory leaks.
-            (it.subviews.firstOrNull() as? UITabBar)?.delegate = null
+            (it.contentView.subviews.firstOrNull() as? UITabBar)?.delegate = null
         },
         modifier = modifier
     )

@@ -17,7 +17,6 @@ import androidx.compose.material.icons.filled.Details
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.Button
-import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -47,9 +46,10 @@ import io.github.tbib.compose_ui.bottom_sheet.AdaptiveBottomSheet
 import io.github.tbib.compose_ui.bottom_sheet.rememberAdaptiveSheetState
 import io.github.tbib.compose_ui.date_picker.AdaptiveDatePicker
 import io.github.tbib.compose_ui.date_picker.rememberAdaptiveDatePickerState
-import io.github.tbib.compose_ui.icons.AdaptiveIcon
+import io.github.tbib.compose_ui.icon_button.AdaptiveIconButton
 import io.github.tbib.compose_ui.icons.IosIcon
 import io.github.tbib.compose_ui.slider.AdaptiveSlider
+import io.github.tbib.compose_ui.text_button.AdaptiveTextButton
 import io.github.tbib.compose_ui.time_picker.AdaptiveTimePicker
 import io.github.tbib.compose_ui.time_picker.rememberAdaptiveTimePickerState
 import io.github.tbib.compose_ui.toggle.AdaptiveSwitch
@@ -215,14 +215,14 @@ fun App() {
                         horizontalAlignment = Alignment.CenterHorizontally,
 
                         ) {
+
                         item {
-                            ElevatedButton(
+                            AdaptiveTextButton(
+                                text = "Show",
                                 onClick = {
                                     showBottomSheet = true
                                 }
-                            ) {
-                                Text("Show Bottom sheet", color = Color.Black)
-                            }
+                            )
                         }
                         items(2) { i ->
                             AdaptiveSwitch(
@@ -239,7 +239,11 @@ fun App() {
                                 )
                         }
                         item {
-                            AdaptiveIcon(
+                            AdaptiveIconButton(
+                                text = "Icon Button",
+                                onClick = {
+                                    println("Icon Button clicked")
+                                },
                                 androidIcon = {
                                     Icon(
                                         Icons.AutoMirrored.Filled.More,
@@ -250,7 +254,7 @@ fun App() {
                                 iosIcon = IosIcon.CustomIcon(
                                     fontFamily = "FontAwesome7Free-Solid",
                                     name = "\uf05a",
-                                    // tint = Color.Magenta,
+                                    tint = Color.Magenta,
                                     size = 24
                                 )
                             )

@@ -2,9 +2,11 @@ package io.github.tbib.compose_ui.icons
 
 import io.github.tbib.compose_ui.icons.IosIcon.CustomIcon
 import io.github.tbib.compose_ui.icons.IosIcon.SystemIcon
+import io.github.tbib.compose_ui.utils.toUiColor
 import platform.UIKit.NSTextAlignmentCenter
 import platform.UIKit.UIFont
 import platform.UIKit.UIImage
+import platform.UIKit.UIImageRenderingMode
 import platform.UIKit.UIImageView
 import platform.UIKit.UILabel
 import platform.UIKit.UIView
@@ -15,9 +17,10 @@ internal fun IosIcon.render(): UIView {
     return when (this) {
         is SystemIcon -> {
             val imageView = UIImageView()
-            // Use UIImage.imageWithSystemName in Kotlin/Native
             imageView.image = UIImage.systemImageNamed(this.name)
+                ?.imageWithRenderingMode(UIImageRenderingMode.UIImageRenderingModeAlwaysTemplate)
             imageView.contentMode = UIViewContentMode.UIViewContentModeScaleAspectFit
+            imageView.tintColor = this.tint.toUiColor()
             imageView
         }
 
@@ -26,6 +29,7 @@ internal fun IosIcon.render(): UIView {
             label.text = this.name
             label.font = UIFont.fontWithName(this.fontFamily, this.size.toDouble())!!
             label.textAlignment = NSTextAlignmentCenter
+            this.tint?.let { label.textColor = it.toUiColor() }
             label
         }
     }
