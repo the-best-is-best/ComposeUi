@@ -7,7 +7,6 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeMultiplatform)
 
-    id("org.jetbrains.dokka") version "2.0.0"
     id("org.ajoberstar.git-publish") version "5.1.2"
     alias(libs.plugins.maven.publish)
     id("signing")
@@ -212,13 +211,6 @@ kotlin {
     }
 }
 
-
-/**
- * Dokka configuration
- */
-tasks.dokkaGfm {
-    outputDirectory.set(buildDir.resolve("wiki")) // Docs in Markdown (GitHub flavored)
-}
 
 /**
  * Git Publish configuration (push to GitHub Wiki repo)
