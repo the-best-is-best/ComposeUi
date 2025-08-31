@@ -7,8 +7,8 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.window.DialogProperties
-import io.github.tbib.compose_ui.dialog.AdaptiveAlertDialog
-import io.github.tbib.compose_ui.dialog.utils.AlertDialogIosActionStyle
+import io.github.tbib.kadaptiveui.dialog.AdaptiveAlertDialog
+import io.github.tbib.kadaptiveui.dialog.utils.AlertDialogIosActionStyle
 
 @Composable
 fun DeleteDialogQuestion(

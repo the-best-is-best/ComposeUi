@@ -77,7 +77,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
 
 
-            implementation(projects.composeUI)
+            implementation(projects.kAdaptiveUI)
             implementation(libs.kotlinx.serialization.json)
         }
         commonTest.dependencies {

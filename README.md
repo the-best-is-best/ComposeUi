@@ -1,31 +1,137 @@
-This is a Kotlin Multiplatform project targeting Android, iOS, Web, Desktop (JVM).
+# KAdaptiveUI
 
-* [/composeApp](./composeApp/src) is for code that will be shared across your Compose Multiplatform
-  applications.
-  It contains several subfolders:
-    - [commonMain](./composeApp/src/commonMain/kotlin) is for code that’s common for all targets.
-    - Other folders are for Kotlin code that will be compiled for only the platform indicated in the
-      folder name.
-      For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-      the [iosMain](./composeApp/src/iosMain/kotlin) folder would be the right place for such calls.
-      Similarly, if you want to edit the Desktop (JVM) specific part,
-      the [jvmMain](./composeApp/src/jvmMain/kotlin)
-      folder is the appropriate location.
+KAdaptiveUI is a Kotlin Multiplatform library that provides a set of adaptive UI components for Android and iOS using Jetpack Compose and UIKit.  
+It helps developers write once and run adaptive UI for both platforms with platform-specific look and feel.
 
-* [/iosApp](./iosApp/iosApp) contains iOS applications. Even if you’re sharing your UI with Compose
-  Multiplatform,
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for
-  your project.
+## Installation
 
-Learn more
-about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html),
-[Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform/#compose-multiplatform),
-[Kotlin/Wasm](https://kotl.in/wasm/)…
+Add dependency to your build.gradle.kts:
 
-We would appreciate your feedback on Compose/Web and Kotlin/Wasm in the public Slack
-channel [#compose-web](https://slack-chats.kotlinlang.org/c/compose-web).
-If you face any issues, please report them
-on [YouTrack](https://youtrack.jetbrains.com/newIssue?project=CMP).
+```kotlin
+implementation("io.github.tbib.composeui:core:1.0.0")
+```
 
-You can open the web application by running the `:composeApp:wasmJsBrowserDevelopmentRun` Gradle
-task.
+## Components
+
+### 1. AdaptiveCircularProgressIndicator
+
+```kotlin
+AdaptiveCircularProgressIndicator(
+    isVisible = true
+)
+```
+
+### 2. AdaptiveTile
+
+```kotlin
+AdaptiveTile(
+    title = "Settings",
+    subtitle = "Manage preferences",
+    leadingIcon = adaptiveIcon,
+    trailingIcon = adaptiveIcon,
+    onClick = {}
+)
+```
+
+### 3. AdaptiveAppBar
+
+```kotlin
+AdaptiveAppBar(
+    title = "Home",
+    actions = listOf(
+        AdaptiveActionItem("Search", adaptiveIcon) { /* onClick */ }
+    )
+)
+```
+
+### 4. AdaptiveBottomNavBar
+
+```kotlin
+AdaptiveBottomNavBar(
+    items = listOf(
+        AdaptiveBottomNavItem("Home", adaptiveIcon, true),
+        AdaptiveBottomNavItem("Profile", adaptiveIcon, false)
+    ),
+    onItemSelected = { /* index */ }
+)
+```
+
+### 5. AdaptiveBottomSheet
+
+```kotlin
+AdaptiveBottomSheet(
+    state = rememberAdaptiveSheetState(),
+    content = { Text("Sheet content") }
+)
+```
+
+### 6. AdaptiveDatePicker
+
+```kotlin
+AdaptiveDatePicker(
+    state = rememberAdaptiveDatePickerState(),
+    onDateSelected = { date -> }
+)
+```
+
+### 7. AdaptiveDialog
+
+```kotlin
+AdaptiveDialog(
+    onDismissRequest = { },
+    title = "Confirm",
+    text = "Are you sure?",
+    confirmButtonText = "OK",
+    dismissButtonText = "Cancel",
+    onConfirm = { }
+)
+```
+
+### 8. AdaptiveIconButton
+
+```kotlin
+AdaptiveIconButton(
+    onClick = {},
+    adaptiveIcons = adaptiveIcon
+)
+```
+
+### 9. AdaptiveSlider
+
+```kotlin
+AdaptiveSlider(
+    value = 0.5f,
+    onValueChange = { }
+)
+```
+
+### 10. AdaptiveTextButton
+
+```kotlin
+AdaptiveTextButton(
+    text = "Continue",
+    onClick = { }
+)
+```
+
+### 11. AdaptiveTimePicker
+
+```kotlin
+AdaptiveTimePicker(
+    state = rememberAdaptiveTimePickerState(),
+    onTimeSelected = { time -> }
+)
+```
+
+### 12. AdaptiveSwitch
+
+```kotlin
+AdaptiveSwitch(
+    checked = true,
+    onCheckedChange = { }
+)
+```
+
+## License
+
+MIT License
