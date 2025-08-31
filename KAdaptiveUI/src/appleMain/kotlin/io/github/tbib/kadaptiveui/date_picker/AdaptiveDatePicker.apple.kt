@@ -38,6 +38,8 @@ actual fun AdaptiveDatePicker(
         UIDatePicker()
     }
 
+    state.applyMinMax(datePicker)
+
     val datePickerManager = remember {
         DatePickerManager(
             initialSelectedDateMillis = state.selectedDateMillis,

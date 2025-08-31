@@ -36,6 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import io.github.tbib.compose_ui_app.dialogs.DeleteDialogQuestion
 import io.github.tbib.kadaptiveui.adaptive_circular_progressIndicator.AdaptiveCircularProgressIndicator
 import io.github.tbib.kadaptiveui.adaptive_tile.AdaptiveTile
 import io.github.tbib.kadaptiveui.app_bar.ActionItem
@@ -56,8 +57,11 @@ import io.github.tbib.kadaptiveui.text_button.AdaptiveTextButton
 import io.github.tbib.kadaptiveui.time_picker.AdaptiveTimePicker
 import io.github.tbib.kadaptiveui.time_picker.rememberAdaptiveTimePickerState
 import io.github.tbib.kadaptiveui.toggle.AdaptiveSwitch
-import io.github.tbib.compose_ui_app.dialogs.DeleteDialogQuestion
 import kotlinx.coroutines.delay
+import kotlinx.datetime.DatePeriod
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.minus
+import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
@@ -141,6 +145,9 @@ fun App() {
 
     val datePickerState = rememberAdaptiveDatePickerState(
         initialSelectedDateMillis = initialMillis,
+        maxDateMillis = Clock.System.now()
+            .toLocalDateTime(TimeZone.currentSystemDefault()).date.minus(period = DatePeriod(years = 15))
+
     )
     val timePickerState = rememberAdaptiveTimePickerState(
         is24Hour = false,

@@ -3,9 +3,14 @@ package io.github.tbib.kadaptiveui.date_picker
 import androidx.compose.material3.DatePickerState
 import androidx.compose.material3.DisplayMode
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SelectableDates
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.saveable.Saver
 import io.github.tbib.kadaptiveui.date_time_picker.getCalendarLocalDefault
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.atStartOfDayIn
+import kotlin.time.ExperimentalTime
 
 /**
  * A state object that can be hoisted to observe the date picker state. See
@@ -36,9 +41,27 @@ actual class AdaptiveDatePickerState actual constructor(
     val yearRange: IntRange,
     val initialMaterialDisplayMode: DisplayMode,
     val initialUIKitDisplayMode: UIKitDisplayMode,
-//    val selectedDates: SelectableDates
+    val minDateMillis: LocalDate?,
+    val maxDateMillis: LocalDate?,
 
-) {
+    ) {
+    @OptIn(ExperimentalTime::class)
+    private fun LocalDate.toEpochMillis(): Long {
+        // تحويل LocalDate إلى Instant عند منتصف الليل UTC
+        val startOfDay = this.atStartOfDayIn(TimeZone.UTC) // LocalDateTime
+        return startOfDay.toEpochMilliseconds() // Instant
+    }
+
+    private fun toSelectableDates(): SelectableDates {
+        return object : SelectableDates {
+            override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+                val afterMin = minDateMillis?.let { it.toEpochMillis() <= utcTimeMillis } ?: true
+                val beforeMax = maxDateMillis?.let { it.toEpochMillis() >= utcTimeMillis } ?: true
+                return afterMin && beforeMax
+            }
+        }
+    }
+
     /**
      * The date picker state that this state holds.
      */
@@ -47,7 +70,7 @@ actual class AdaptiveDatePickerState actual constructor(
             locale = getCalendarLocalDefault(),
             initialSelectedDateMillis = initialSelectedDateMillis,
             initialDisplayedMonthMillis = initialDisplayedMonthMillis,
-            // selectableDates = selectedDates ,
+            selectableDates = toSelectableDates(),
             yearRange = yearRange,
             initialDisplayMode = initialMaterialDisplayMode,
         )

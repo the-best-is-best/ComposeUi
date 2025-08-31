@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
+import kotlinx.datetime.LocalDate
 
 @Composable
 @ExperimentalMaterial3Api
@@ -17,6 +18,8 @@ fun rememberAdaptiveDatePickerState(
     yearRange: IntRange = DatePickerDefaults.YearRange,
     initialMaterialDisplayMode: DisplayMode = DisplayMode.Picker,
     initialUIKitDisplayMode: UIKitDisplayMode = UIKitDisplayMode.Picker,
+    minDateMillis: LocalDate? = null,
+    maxDateMillis: LocalDate? = null
 ): AdaptiveDatePickerState =
     rememberSaveable(
         saver = AdaptiveDatePickerState.Saver(),
@@ -27,6 +30,8 @@ fun rememberAdaptiveDatePickerState(
             yearRange = yearRange,
             initialMaterialDisplayMode = initialMaterialDisplayMode,
             initialUIKitDisplayMode = initialUIKitDisplayMode,
+            minDateMillis = minDateMillis,
+            maxDateMillis = maxDateMillis
         )
     }
 
@@ -59,7 +64,8 @@ expect class AdaptiveDatePickerState(
     yearRange: IntRange,
     initialMaterialDisplayMode: DisplayMode,
     initialUIKitDisplayMode: UIKitDisplayMode,
-//    selectedDates: SelectableDates = DatePickerDefaults.AllDates
+    minDateMillis: LocalDate? = null,
+    maxDateMillis: LocalDate? = null
 
 ) {
 

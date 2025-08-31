@@ -9,6 +9,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.setValue
 import io.github.tbib.kadaptiveui.date_picker.utils.KotlinxDatetimeCalendarModel
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.atStartOfDayIn
+import platform.Foundation.NSDate
+import platform.Foundation.dateWithTimeIntervalSince1970
+import platform.UIKit.UIDatePicker
+import kotlin.time.ExperimentalTime
 
 /**
  * A state object that can be hoisted to observe the date picker state. See
@@ -39,9 +46,33 @@ actual class AdaptiveDatePickerState actual constructor(
     val yearRange: IntRange,
     val initialMaterialDisplayMode: DisplayMode,
     val initialUIKitDisplayMode: UIKitDisplayMode,
-//    val selectedDates: SelectableDates
-
+    val minDateMillis: LocalDate?,
+    val maxDateMillis: LocalDate?,
 ) {
+    @OptIn(ExperimentalTime::class)
+    private fun LocalDate.toEpochMillis(): Long {
+        val startOfDayUtc = this.atStartOfDayIn(TimeZone.UTC)   // LocalDateTime
+        return startOfDayUtc.toEpochMilliseconds()
+    }
+
+    fun applyMinMax(datePicker: UIDatePicker) {
+        minDateMillis?.let {
+            // NSDate يقبل ثواني، لذلك نقسم على 1000
+            datePicker.minimumDate =
+                NSDate.dateWithTimeIntervalSince1970(it.toEpochMillis() / 1000.0)
+        }
+
+        maxDateMillis?.let {
+            datePicker.maximumDate =
+                NSDate.dateWithTimeIntervalSince1970(it.toEpochMillis() / 1000.0)
+        }
+
+        // تعيين التاريخ الافتراضي إذا موجود
+        selectedDateMillis?.let {
+            datePicker.date = NSDate.dateWithTimeIntervalSince1970(it / 1000.0)
+        }
+    }
+
 
     actual var selectedDateMillis by mutableStateOf(
         initialSelectedDateMillis?.let { KotlinxDatetimeCalendarModel().getCanonicalDate(it) }?.utcTimeMillis
