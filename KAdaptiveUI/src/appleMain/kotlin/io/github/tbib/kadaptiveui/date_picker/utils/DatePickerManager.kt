@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import io.github.tbib.kadaptiveui.date_picker.UIKitDisplayMode
-import io.github.tbib.kadaptiveui.date_picker.getCalendarLocalDefault
+import io.github.tbib.kadaptiveui.date_time_picker.getCalendarLocalDefault
 import io.github.tbib.kadaptiveui.utils.applyTheme
 import io.github.tbib.kadaptiveui.utils.isDark
 import io.github.tbib.kadaptiveui.utils.toUiColor

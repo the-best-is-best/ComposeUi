@@ -1,4 +1,4 @@
-package io.github.tbib.kadaptiveui.date_picker
+package io.github.tbib.kadaptiveui.date_time_picker
 
 import androidx.compose.material3.CalendarLocale
 

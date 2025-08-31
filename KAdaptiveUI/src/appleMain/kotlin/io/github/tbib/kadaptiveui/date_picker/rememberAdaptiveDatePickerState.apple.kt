@@ -1,6 +1,5 @@
 package io.github.tbib.kadaptiveui.date_picker
 
-import androidx.compose.material3.CalendarLocale
 import androidx.compose.material3.DatePickerState
 import androidx.compose.material3.DisplayMode
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -10,7 +9,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.setValue
 import io.github.tbib.kadaptiveui.date_picker.utils.KotlinxDatetimeCalendarModel
-import platform.Foundation.currentLocale
 
 /**
  * A state object that can be hoisted to observe the date picker state. See
@@ -82,5 +80,3 @@ actual class AdaptiveDatePickerState actual constructor(
             )
     }
 }
-
-internal actual fun getCalendarLocalDefault(): CalendarLocale = CalendarLocale.currentLocale

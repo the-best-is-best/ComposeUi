@@ -1,7 +1,6 @@
 package io.github.tbib.kadaptiveui.date_picker
 
 
-import androidx.compose.material3.CalendarLocale
 import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.DisplayMode
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -102,5 +101,3 @@ internal fun uiKitDisplayModeFromValue(value: Int) =
         else -> UIKitDisplayMode.Wheels
     }
 
-@OptIn(ExperimentalMaterial3Api::class)
-internal expect fun getCalendarLocalDefault(): CalendarLocale
