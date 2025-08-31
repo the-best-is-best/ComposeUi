@@ -1,3 +1,4 @@
+import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform.getCurrentOperatingSystem
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
@@ -5,11 +6,99 @@ plugins {
     alias(libs.plugins.androidKotlinMultiplatformLibrary)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeMultiplatform)
+
+    id("org.jetbrains.dokka") version "2.0.0"
+    id("org.ajoberstar.git-publish") version "5.1.2"
+    alias(libs.plugins.maven.publish)
+    id("signing")
+
+
 }
+
+tasks.withType<PublishToMavenRepository> {
+    val isMac = getCurrentOperatingSystem().isMacOsX
+    onlyIf {
+        isMac.also {
+            if (!isMac) logger.error(
+                """
+                    Publishing the library requires macOS to be able to generate iOS artifacts.
+                    Run the task on a mac or use the project GitHub workflows for publication and release.
+                """
+            )
+        }
+    }
+}
+
+
+extra["packageNameSpace"] = "io.github.tbib.kadaptiveui"
+extra["groupId"] = "io.github.the-best-is-best"
+extra["artifactId"] = "kadaptiveui"
+extra["version"] = "1.0.0"
+extra["packageName"] = "KAdaptiveUI"
+extra["packageUrl"] = "https://github.com/the-best-is-best/ComposeUi"
+extra["packageDescription"] =
+    "KAdaptiveUI is a Kotlin Multiplatform library that provides a set of adaptive UI components for Android and iOS using Jetpack Compose and UIKit.  \n" +
+            "It helps developers write once and run adaptive UI for both platforms with platform-specific look and feel."
+extra["system"] = "GITHUB"
+extra["issueUrl"] = "https://github.com/the-best-is-best/ComposeUi/issues"
+extra["connectionGit"] = "https://github.com/the-best-is-best/ComposeUi.git"
+
+extra["developerName"] = "Michelle Raouf"
+extra["developerNameId"] = "MichelleRaouf"
+extra["developerEmail"] = "eng.michelle.raouf@gmail.com"
+
+
+mavenPublishing {
+    coordinates(
+        extra["groupId"].toString(),
+        extra["artifactId"].toString(),
+        extra["version"].toString()
+    )
+
+    publishToMavenCentral(true)
+    signAllPublications()
+
+    pom {
+        name.set(extra["packageName"].toString())
+        description.set(extra["packageDescription"].toString())
+        url.set(extra["packageUrl"].toString())
+        licenses {
+            license {
+                name.set("Apache-2.0")
+                url.set("https://opensource.org/licenses/Apache-2.0")
+            }
+        }
+        issueManagement {
+            system.set(extra["system"].toString())
+            url.set(extra["issueUrl"].toString())
+        }
+        scm {
+            connection.set(extra["connectionGit"].toString())
+            url.set(extra["packageUrl"].toString())
+        }
+        developers {
+            developer {
+                id.set(extra["developerNameId"].toString())
+                name.set(extra["developerName"].toString())
+                email.set(extra["developerEmail"].toString())
+            }
+        }
+    }
+
+}
+
+
+signing {
+    useGpgCmd()
+    sign(publishing.publications)
+}
+
+
+val nameSpace = extra["packageNameSpace"].toString()
 
 kotlin {
     androidLibrary {
-        namespace = "io.github.tbib.kadaptiveui"
+        namespace = nameSpace
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
 
@@ -21,7 +110,7 @@ kotlin {
         }
     }
 
-    val xcfName = "ComposeUIKit"
+    val xcfName = "KAdaptiveUIKit"
 
     listOf(
         iosX64(),
@@ -42,6 +131,14 @@ kotlin {
     wasmJs()
 
     sourceSets {
+        all {
+            languageSettings {
+                // Opt-in once, applies to all targets
+                optIn("androidx.compose.material3.ExperimentalMaterial3Api")
+                optIn("androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi")
+                // تضيف أي API تانية انت محتاجها
+            }
+        }
         val commonMain by getting {
             dependencies {
                 implementation(libs.kotlin.stdlib)
@@ -71,9 +168,9 @@ kotlin {
             dependsOn(materialMain) // Android uses Material through materialMain
         }
 
-//        val jsMain by getting {
-//            dependsOn(materialMain) // JS uses Material through materialMain
-//        }
+        val jsMain by getting {
+            dependsOn(materialMain) // JS uses Material through materialMain
+        }
 
         val jvmMain by getting {
             dependsOn(materialMain) // JVM uses Material through materialMain
@@ -112,5 +209,25 @@ kotlin {
                 implementation(libs.androidx.testExt.junit)
             }
         }
+    }
+}
+
+
+/**
+ * Dokka configuration
+ */
+tasks.dokkaGfm {
+    outputDirectory.set(buildDir.resolve("wiki")) // Docs in Markdown (GitHub flavored)
+}
+
+/**
+ * Git Publish configuration (push to GitHub Wiki repo)
+ */
+gitPublish {
+    // ⚠️ غير "USER/REPO" بالـ GitHub repo بتاعك
+    repoUri.set("https://github.com/the-best-is-best/ComposeUi.wiki.git")
+    branch.set("main") // GitHub Wiki uses master
+    contents {
+        from("build/wiki")
     }
 }

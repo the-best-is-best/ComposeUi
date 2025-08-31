@@ -8,7 +8,7 @@ It helps developers write once and run adaptive UI for both platforms with platf
 Add dependency to your build.gradle.kts:
 
 ```kotlin
-implementation("io.github.tbib.composeui:core:1.0.0")
+implementation("io.github.tbib.kadaptiveui:core:1.0.0")
 ```
 
 ## Components
