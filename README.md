@@ -1,14 +1,29 @@
-# KAdaptiveUI
+<h1 align="center">KADaptiveUI</h1><br>
+<div align="center">
+<a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a>
+<a href="https://android-arsenal.com/api?level=21" rel="nofollow">
+    <img alt="API" src="https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat" style="max-width: 100%;">
+</a>
+  <img src="https://img.shields.io/badge/Platform-Android-brightgreen.svg?logo=android" alt="Badge Android" />
+  <img src="https://img.shields.io/badge/iOS-13%2B-blue.svg?logo=apple" alt="iOS 13+ Badge" />
 
-KAdaptiveUI is a Kotlin Multiplatform library that provides a set of adaptive UI components for Android and iOS using Jetpack Compose and UIKit.  
-It helps developers write once and run adaptive UI for both platforms with platform-specific look and feel.
+<a href="https://github.com/the-best-is-best/"><img alt="Profile" src="https://img.shields.io/badge/github-%23181717.svg?&style=for-the-badge&logo=github&logoColor=white" height="20"/></a>
+</div>
 
-## Installation
+### KAdaptiveUI is a Kotlin Multiplatform library that provides a set of adaptive UI components for Android and iOS using Jetpack Compose and UIKit It helps developers write once and run adaptive UI for both platforms with platform-specific look and feel
+
+<hr>
+
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.the-best-is-best/kadaptiveui)](https://central.sonatype.com/artifact/io.github.the-best-is-best/kadaptiveui)
+
+KAdmob is available on `mavenCentral()`.
+
+## Install
 
 Add dependency to your build.gradle.kts:
 
 ```kotlin
-implementation("io.github.tbib.kadaptiveui:core:1.0.0")
+implementation("io.github.the-best-is-best:kadaptiveui:1.0.0")
 ```
 
 ## Components
@@ -16,9 +31,7 @@ implementation("io.github.tbib.kadaptiveui:core:1.0.0")
 ### 1. AdaptiveCircularProgressIndicator
 
 ```kotlin
-AdaptiveCircularProgressIndicator(
-    isVisible = true
-)
+AdaptiveCircularProgressIndicator()
 ```
 
 ### 2. AdaptiveTile
