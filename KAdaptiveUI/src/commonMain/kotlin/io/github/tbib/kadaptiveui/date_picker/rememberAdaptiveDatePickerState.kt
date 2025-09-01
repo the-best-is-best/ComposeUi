@@ -18,8 +18,8 @@ fun rememberAdaptiveDatePickerState(
     yearRange: IntRange = DatePickerDefaults.YearRange,
     initialMaterialDisplayMode: DisplayMode = DisplayMode.Picker,
     initialUIKitDisplayMode: UIKitDisplayMode = UIKitDisplayMode.Picker,
-    minDateMillis: LocalDate? = null,
-    maxDateMillis: LocalDate? = null
+    minDate: LocalDate? = null,
+    maxDate: LocalDate? = null
 ): AdaptiveDatePickerState =
     rememberSaveable(
         saver = AdaptiveDatePickerState.Saver(),
@@ -30,8 +30,8 @@ fun rememberAdaptiveDatePickerState(
             yearRange = yearRange,
             initialMaterialDisplayMode = initialMaterialDisplayMode,
             initialUIKitDisplayMode = initialUIKitDisplayMode,
-            minDateMillis = minDateMillis,
-            maxDateMillis = maxDateMillis
+            minDateMillis = minDate,
+            maxDateMillis = maxDate
         )
     }
 

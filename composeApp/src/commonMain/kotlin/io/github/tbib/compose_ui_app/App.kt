@@ -59,11 +59,18 @@ import io.github.tbib.kadaptiveui.time_picker.rememberAdaptiveTimePickerState
 import io.github.tbib.kadaptiveui.toggle.AdaptiveSwitch
 import kotlinx.coroutines.delay
 import kotlinx.datetime.DatePeriod
+import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.minus
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
+
+@OptIn(ExperimentalTime::class)
+fun LocalDate.Companion.now(timeZone: TimeZone = TimeZone.currentSystemDefault()): LocalDate {
+    return Clock.System.now().toLocalDateTime(timeZone).date
+}
+
 
 val items = listOf(
     AdaptiveBottomNavBarItem<Routes>(
@@ -145,7 +152,12 @@ fun App() {
 
     val datePickerState = rememberAdaptiveDatePickerState(
         initialSelectedDateMillis = initialMillis,
-        maxDateMillis = Clock.System.now()
+
+        yearRange = IntRange(
+            1900,
+            LocalDate.now().year - 18
+        ),
+        maxDate = Clock.System.now()
             .toLocalDateTime(TimeZone.currentSystemDefault()).date.minus(period = DatePeriod(years = 15))
 
     )
